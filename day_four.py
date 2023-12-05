@@ -17,12 +17,47 @@ def get_winning_number(line):
             if length_of_numbers == 0:
                 length_of_numbers = 1
             else: 
-                length_of_numbers *= 2
+                length_of_numbers += 1
 
     return length_of_numbers
 
 anwser = 0
-for line in data_into_list:
-    anwser += get_winning_number(line)
+array_of_winnings = {}
+for i, line in enumerate(data_into_list):
+    val = i+1
+    if (val in array_of_winnings):
+        array_of_winnings[val] += 1
+    else:
+        array_of_winnings[val] = 1
+
+    winning_number = get_winning_number(line)
+    
+    if (winning_number > 0):
+        
+        # check if we are past the end
+
+        # 
+        end = winning_number + 1
+        if end + val > len(data_into_list) :
+            
+            end = len(data_into_list) - val + 1
+        
+
+        # go through number of winnings
+        for j in range(1, end): # maybe change this
+           
+            # not sure
+            if val+j in array_of_winnings:
+                array_of_winnings[val+j] += array_of_winnings[val]
+            else:
+                array_of_winnings[val+j] = array_of_winnings[val]
+
+      
+
+for amount in array_of_winnings.values():
+    anwser += amount
+
+
 
 print(anwser)
+
