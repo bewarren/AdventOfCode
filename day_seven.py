@@ -12,7 +12,7 @@ bids = list(map(lambda x: x.split()[1], data_into_list))
 
 
 def map_hand(hand):
-    counts = {}
+    counts = {'J':0}
     for val in hand:
         if val in counts:
             counts[val] += 1 
@@ -20,31 +20,52 @@ def map_hand(hand):
             counts[val] = 1
     
     values = list(counts.values())
+
     
     if (5 in values):
         return 7
     
     elif (4 in values):
-        return 6
+        if counts['J'] == 1 or counts['J'] == 4:
+            return 7
+        else:
+            return 6 
     elif (3 in values and 2 in values):
-        return 5
+        if counts['J'] == 3 or counts['J'] == 2:
+            return 7
+        else:
+            return 5
     elif (3 in values):
-        return 4
+        if counts['J'] == 1 or counts['J'] == 3:
+            return 6
+        else:
+            return 4
     
     elif (values.count(2) == 2):
-        return 3 
+        if counts['J'] == 2:
+            return 6
+        elif counts['J'] == 1:
+            return 5
+        else:
+            return 3 
     
     elif (values.count(2) == 1):
-        return 2
+        if counts['J'] == 1 or counts['J'] == 2:
+            return 4
+        else:
+            return 2
     else:
-        return 1
+        if counts['J'] == 1:
+            return 2
+        else:
+            return 1
 
 hand_values = list((map(map_hand, hands)))
 
 def take_third(elem):
     return elem[2]
 
-HAND_STRENGTH = ['A', 'K', 'Q', 'J', 'T', '9', '8', '7', '6', '5', '4', '3', '2'][::-1]
+HAND_STRENGTH = ['A', 'K', 'Q', 'T', '9', '8', '7', '6', '5', '4', '3', '2', 'J'][::-1]
 
 def get_hand_letter_vals(hand_one, hand_two):
     
@@ -61,6 +82,8 @@ def get_hand_letter_vals(hand_one, hand_two):
                 return 1
             else: 
                 pass
+
+     return -1
 
 z = list(map(list, zip(hands, bids, hand_values)))
 
