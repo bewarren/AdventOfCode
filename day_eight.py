@@ -1,4 +1,7 @@
 
+import math
+
+
 my_file = open("input_eight.txt", "r")
 
 data = my_file.read()
@@ -24,15 +27,40 @@ for num in letter_maps:
     left, right = order[0][2:].split()[0], order[1][:-1].split()[0]
     alphabet_dict[letters] = {'L': left, 'R': right}
     
-break_out = True
-at_letter = 'AAA'
-count = 0
-while break_out:
-    for i in instructions:
-        at_letter = alphabet_dict[at_letter][i]
-        count += 1
-        if (at_letter == 'ZZZ'):
-            break_out = False 
-            break
 
-print(count)
+
+def ending_A(letter):
+    return letter[-1] == 'A'
+
+def ending_Z(letter):
+    return letter[-1] == 'Z'
+
+ending_a = list(filter(ending_A, alphabet_dict.keys()))
+position = ending_a
+
+
+
+
+
+def change_position(letter, instruction):
+    return alphabet_dict[letter][instruction]
+
+
+print(ending_a)
+vals = []
+
+for val in ending_a:
+    pos = val
+    count = 0
+    break_out = True
+
+    while break_out:
+        for i in instructions:
+            pos = change_position(pos, i)
+            count += 1
+            if (ending_Z(pos)):
+                vals.append(count)
+                break_out = False 
+                break
+
+print(math.lcm(*vals))
