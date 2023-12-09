@@ -1,4 +1,4 @@
-my_file = open("test_input_nine.txt", "r")
+my_file = open("input_nine.txt", "r")
 
 data = my_file.read()
 
@@ -16,11 +16,13 @@ def recursive_row(row):
             diffs.append(val-first_val)
             first_val = val 
         
-        return diffs[-1] + recursive_row(diffs)
+        return diffs[0] - recursive_row(diffs)
+
+
 
 anwser = 0
 for row in data_into_list:
-    val = int(row.split()[-1])+ recursive_row(list(map(int, row.split())))
+    val = int(row.split()[0]) - recursive_row(list(map(int, row.split())))
     
     anwser += val
 
