@@ -18,7 +18,7 @@ for i, seed in enumerate(seeds):
         pass 
     else:
         seeds_extended.update(range(seeds[i], seeds[i]+seeds[i+1]))
-
+# this top bit is wrong -- need to look at each seed range and get mins
 
 maps = data_into_list[1:]
 
@@ -39,7 +39,7 @@ def get_location(seed):
             mpNumbers = mp.split(" ")
             destination_start, source_start, range_length = int(mpNumbers[0]), int(mpNumbers[1]), int(mpNumbers[2])
 
-            if val in set(range(source_start, source_start+range_length)):
+            if source_start <= val <= source_start+range_length:
                 index = val - source_start 
                 map_dict[source_start + index] = destination_start+index
                 break
